@@ -171,7 +171,7 @@
     }
 
     // 👉 CHALLENGE 4
-    function scrub() {
+    function scrub(text, forbidden) {
       // 🧠 scrub takes a string "text" as its first argument, and an array of forbidden words "forbidden" as its second
       // Any word in the text included in the array of forbidden words is replaced with a word of equal length but made of lowcase "x"
       // The scrubbed text is then returned from the function, as seen in the examples below
@@ -183,10 +183,24 @@
       //    scrub("aces high", ["high", "aces", "hearts"]) // returns "xxxx xxxx"
       //    scrub("", ["high", "aces""]) // returns ""
       // 🌟 HINT: useful array methods to use are `push`, `indexOf`, `split`, `join`
+
+    const words = text.split(' ')
+
+     for (let i = 0; i < words.length; i++) {
+    const word = words[i]
+
+     if (forbidden.includes(word)) {
+      words[i] = 'x'.repeat(word.length)
     }
+   }
+  
+     return words.join(' ')
+
+
+   }
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber() {
+    function normalizePhoneNumber(num) {
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -198,7 +212,21 @@
       // 🌟 HINT: instead of looping over the number's digits, loop backwards over a template "(XXX) XXX-XXXX"
       // 🌟 HINT: at each iteration, if the current character is an "X", replace it with the result of popping a digit from the number
       // 🌟 HINT: if you'd rather loop forwards, use `shift` instead of `pop`
+
+     if (num.length !== 10) {
+       return "type a 10-digit number"
     }
+
+     for (let i = 0; i < num.length; i++) {
+     if (isNaN(num[i]) || parseInt(num[i]) < 0 || parseInt(num[i]) > 9) {
+       return "invalid phone number"
+     }
+    }
+
+     const template = "(XXX) XXX-XXXX"
+     let j = 0
+       return template.replace(/X/g, () => num[j++])
+  }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
@@ -208,6 +236,26 @@
       // 🌟 HINT: research using `Math.random` to obtain a number from 1 to 6
       // 🌟 HINT: use `while(true)` to throw the dice indefinitely, but avoid an infinite loop by making sure to break out eventually
       // 🌟 HINT: you need to keep track of the total number of throws, as well as how many sixes in a row
+
+       let throws = 0
+       let countSixes = 0
+
+       while (true) {
+       throws++
+      const roll = Math.floor(Math.random() * 6) + 1
+       if (roll === 6) {
+       countSixes++
+      
+       if (countSixes === 3) {
+        break
+      }
+     } else {
+       countSixes = 0
+     }
+    }
+       return throws
+       console.log()
+
     }
 
     // 🧪 TESTS, do not make any changes below this line ===================
